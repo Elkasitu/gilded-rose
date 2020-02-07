@@ -1,10 +1,10 @@
 import unittest
 
-from gilded_rose import Item, GildedRose
+from gilded_rose import CommonItem, AgedItem, LegendaryItem, TimedItem, GildedRose
 
 class GildedRoseTests(unittest.TestCase):
     def test_left_boundary(self):
-        item = Item("foo", 0, 0)
+        item = CommonItem("foo", 0, 0)
         gilded_rose = GildedRose([item])
 
         self.assertEqual(item.quality, 0)
@@ -12,10 +12,10 @@ class GildedRoseTests(unittest.TestCase):
         self.assertEqual(item.sell_in, -1)
         self.assertEqual(item.quality, 0)
 
-    def test_normal_item_decay(self):
+    def test_common_item_decay(self):
         items = [
-            Item("foo", 1, 1),
-            Item("bar", 1, 10),
+            CommonItem("foo", 1, 1),
+            CommonItem("bar", 1, 10),
         ]
         gilded_rose = GildedRose(items)
 
@@ -27,10 +27,10 @@ class GildedRoseTests(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(items[1].quality, 7)
 
-    def test_aged_decay(self):
+    def test_aged_item_decay(self):
         items = [
-            Item("Aged Brie", 1, 0),
-            Item("Aged Brie", 0, 50),
+            AgedItem("Aged Brie", 1, 0),
+            AgedItem("Aged Brie", 0, 50),
         ]
         gilded_rose = GildedRose(items)
 
@@ -42,10 +42,10 @@ class GildedRoseTests(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(items[0].quality, 3)
 
-    def test_legendary_decay(self):
+    def test_legendary_item_decay(self):
         items = [
-            Item("Sulfuras, Hand of Ragnaros", 0, 80),
-            Item("Sulfuras, Hand of Ragnaros", 1, 80),
+            LegendaryItem("Sulfuras, Hand of Ragnaros", 0, 80),
+            LegendaryItem("Sulfuras, Hand of Ragnaros", 1, 80),
         ]
         gilded_rose = GildedRose(items)
 
@@ -55,12 +55,12 @@ class GildedRoseTests(unittest.TestCase):
         self.assertEqual(items[0].quality, 80)
         self.assertEqual(items[1].quality, 80)
 
-    def test_timed_decay(self):
+    def test_timed_item_decay(self):
         items = [
-            Item("Backstage passes to a TAFKAL80ETC concert", 11, 0),
-            Item("Backstage passes to a TAFKAL80ETC concert", 10, 0),
-            Item("Backstage passes to a TAFKAL80ETC concert", 5, 0),
-            Item("Backstage passes to a TAFKAL80ETC concert", 0, 50),
+            TimedItem("Backstage passes to a TAFKAL80ETC concert", 11, 0),
+            TimedItem("Backstage passes to a TAFKAL80ETC concert", 10, 0),
+            TimedItem("Backstage passes to a TAFKAL80ETC concert", 5, 0),
+            TimedItem("Backstage passes to a TAFKAL80ETC concert", 0, 50),
         ]
         gilded_rose = GildedRose(items)
 
@@ -75,7 +75,7 @@ class GildedRoseTests(unittest.TestCase):
         self.assertEqual(items[3].quality, 0)
 
     def test_conjured_decay(self):
-        item = Item("Conjured", 1, 2)
+        item = CommonItem("Conjured", 1, 2)
         gilded_rose = GildedRose([item])
 
         self.assertEqual(item.quality, 2)
