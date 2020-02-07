@@ -64,3 +64,9 @@ class TimedItem(CommonItem):
             return 3
         else:
             return float('-inf')
+
+
+class ConjuredItem(CommonItem):
+    @property
+    def delta(self):
+        return super().delta * 2

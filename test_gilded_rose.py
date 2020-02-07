@@ -1,6 +1,6 @@
 import unittest
 
-from gilded_rose import CommonItem, AgedItem, LegendaryItem, TimedItem, GildedRose
+from gilded_rose import CommonItem, AgedItem, LegendaryItem, TimedItem, ConjuredItem, GildedRose
 
 class GildedRoseTests(unittest.TestCase):
     def test_left_boundary(self):
@@ -75,14 +75,12 @@ class GildedRoseTests(unittest.TestCase):
         self.assertEqual(items[3].quality, 0)
 
     def test_conjured_decay(self):
-        item = CommonItem("Conjured", 1, 2)
+        item = ConjuredItem("Master Sword", 1, 2)
         gilded_rose = GildedRose([item])
 
         self.assertEqual(item.quality, 2)
         gilded_rose.update_quality()
         self.assertEqual(item.quality, 0)
-        gilded_rose.update_quality()
-        self.assertEqual(item.quality, -4)
 
 
 if __name__ == '__main__':
